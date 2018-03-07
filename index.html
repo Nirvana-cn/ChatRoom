@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="name">
+    <button @click="sendName">Submit</button>
+</div>
+</body>
+<script>
+    var socket=io.connect();
+    var app=new Vue({
+        el:'#app',
+        data:{
+            name:''
+        },
+        methods:{
+            sendName() {
+                socket.emit('name',{userName:this.name})
+            }
+        }
+    });
+    socket.on('welcome',function (data) {
+        console.log(data.text);
+    })
+</script>
+</html>
