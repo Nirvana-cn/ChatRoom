@@ -15,7 +15,7 @@ var io=require('socket.io').listen(server);
 io.sockets.on('connection',function (socket) {
     socket.emit('welcome',{text:'Welcome'});
     socket.on('name',function (data) {
-        console.log(`Server received the following name : ${data.userName}`)
+        console.log(`Server received the following name : ${data.userName}`);
         userNames.push(data.userName);
         socket.userName=data.userName;
     });
