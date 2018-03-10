@@ -13,8 +13,9 @@
         <button @click="sendName">Submit</button>
     </div>
     <div class="message" v-show="!flag">
-        <div class="text">
-            <p>聊天记录</p>
+        <p>聊天记录</p>
+        <div class="text" v-for="record in userMessages">
+            <p>{{record.userName}}:{{record.userMessage}}</p>
         </div>
         <div class="content">
             <input type="text" v-model="message">
@@ -35,14 +36,15 @@
         el: '#app',
         data: {
             name: '',
-            message:'',
+            message: '',
             flag: true,
-            userNames: []
+            userNames: [],
+            userMessages: []
         },
         methods: {
             sendName() {
                 let that = this
-                socket.emit('name', {userName: this.name}, function (data) {
+                socket.emit('name', {userName: that.name}, function (data) {
                     if (data) {
                         console.log('user name set successfully')
                         that.flag = false
@@ -50,6 +52,12 @@
                         alert('That user name is already taken')
                     }
                 })
+            },
+            sendMessage() {
+                let that = this;
+                socket.emit('message', {userName: that.name, userMessage: that.message})
+                that.userMessages.push({userName: that.name, userMessage: that.message})
+                that.message = ''
             }
         }
     })
@@ -59,6 +67,10 @@
     socket.on('userNames', function (data) {
         console.log(data)
         app.userNames = data
+    })
+    socket.on('receiveMessage', function (data) {
+        console.log(data)
+        app.userMessages.push(data)
     })
 </script>
 </html>

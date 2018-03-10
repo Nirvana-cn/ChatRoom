@@ -26,9 +26,10 @@ io.sockets.on('connection',function (socket) {
         }
     });
     socket.on('message',function (data) {
-        socket.emit('message',{
-            userName:socket.userName,
-            message:data
+        console.log(`Receive message from ${data.userName}:${data.userMessage}`)
+        socket.broadcast.emit('receiveMessage',{
+            userName:data.userName,
+            userMessage:data.userMessage
         })
     })
     socket.on('disconnect',function () {
