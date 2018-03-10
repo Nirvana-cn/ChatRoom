@@ -8,25 +8,57 @@
 </head>
 <body>
 <div id="app">
-    <input type="text" v-model="name">
-    <button @click="sendName">Submit</button>
+    <div class="name" v-show="flag">
+        <input type="text" v-model="name">
+        <button @click="sendName">Submit</button>
+    </div>
+    <div class="message" v-show="!flag">
+        <div class="text">
+            <p>聊天记录</p>
+        </div>
+        <div class="content">
+            <input type="text" v-model="message">
+            <button @click="sendMessage">Send Message</button>
+        </div>
+    </div>
+    <div class="list">
+        <p>当前在线用户</p>
+        <div v-for="user in userNames">
+            <p>{{user}}</p>
+        </div>
+    </div>
 </div>
 </body>
 <script>
-    var socket=io.connect();
-    var app=new Vue({
-        el:'#app',
-        data:{
-            name:''
+    var socket = io.connect()
+    var app = new Vue({
+        el: '#app',
+        data: {
+            name: '',
+            message:'',
+            flag: true,
+            userNames: []
         },
-        methods:{
+        methods: {
             sendName() {
-                socket.emit('name',{userName:this.name})
+                let that = this
+                socket.emit('name', {userName: this.name}, function (data) {
+                    if (data) {
+                        console.log('user name set successfully')
+                        that.flag = false
+                    } else {
+                        alert('That user name is already taken')
+                    }
+                })
             }
         }
-    });
-    socket.on('welcome',function (data) {
-        console.log(data.text);
+    })
+    socket.on('welcome', function (data) {
+        app.userNames = data
+    })
+    socket.on('userNames', function (data) {
+        console.log(data)
+        app.userNames = data
     })
 </script>
 </html>
