@@ -5,25 +5,76 @@
     <title>index</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        #app{
+            margin:100px 0 0 100px;
+        }
+        .main{
+            float:left;
+            margin-right:50px;
+            padding:10px;
+            width:400px;
+            min-height:350px;
+            border:1px solid #000;
+        }
+        .message{
+            display:flex;
+            flex-direction: column;
+            border:1px solid #000;
+            min-height:350px;
+        }
+        .wrapper{
+            flex-grow: 10;
+            border-bottom:1px solid #000;
+            max-height:302px;
+            overflow-y:scroll;
+        }
+        .text{
+            padding-left:5px;
+        }
+        .info{
+            word-wrap:break-word;
+            word-break: normal;
+        }
+        .content{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items:center;
+            flex-grow: 1;
+        }
+        .input{
+            height:17px;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
-    <div class="name" v-show="flag">
-        <input type="text" v-model="name">
-        <button @click="sendName">Submit</button>
-    </div>
-    <div class="message" v-show="!flag">
-        <p>聊天记录</p>
-        <div class="text" v-for="record in userMessages">
-            <p>{{record.userName}}:{{record.userMessage}}</p>
+    <div class="main">
+        <div class="name" v-show="flag">
+            <p>输入你的昵称</p>
+            <input type="text" v-model="name">
+            <button @click="sendName">提交昵称</button>
         </div>
-        <div class="content">
-            <input type="text" v-model="message">
-            <button @click="sendMessage">Send Message</button>
+        <div class="message" v-show="!flag">
+            <div class="wrapper">
+                <p class="tip">聊天记录</p>
+                <div class="text" v-for="record in userMessages">
+                    <p class="info">{{record.userName}} : {{record.userMessage}}</p>
+                </div>
+            </div>
+            <div class="content">
+                <input type="text" v-model="message" class="input">
+                <button @click="sendMessage">发送信息</button>
+            </div>
         </div>
     </div>
     <div class="list">
-        <p>当前在线用户</p>
+        <p>目前有 {{userNames.length}} 位用户在线</p>
         <div v-for="user in userNames">
             <p>{{user}}</p>
         </div>
