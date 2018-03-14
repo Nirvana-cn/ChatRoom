@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chatting Room</title>
+    <title>聊天室</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <style>
@@ -86,7 +86,7 @@
         </div>
     </div>
     <div class="list">
-        <p class="remind">目前有 {{userNames.length}} 位用户在线</p>
+        <p class="remind">目前有 {{userNames.length}} 位好友在线</p>
         <div v-for="user in userNames">
             <p>{{user}}</p>
         </div>
