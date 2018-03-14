@@ -15,7 +15,7 @@ var io=require('socket.io').listen(server)
 io.sockets.on('connection',function (socket) {
     socket.emit('welcome',userNames)
     socket.on('name',function (data,callback) {
-        console.log(`Server received the following name : ${data.userName}`)
+        // console.log(`Server received the following name : ${data.userName}`)
         if(userNames.indexOf(data.userName)!== -1){
             callback(false)
         }else{
@@ -26,7 +26,7 @@ io.sockets.on('connection',function (socket) {
         }
     });
     socket.on('message',function (data) {
-        console.log(`Receive message from ${data.userName}:${data.userMessage}`)
+        // console.log(`Receive message from ${data.userName}:${data.userMessage}`)
         socket.broadcast.emit('receiveMessage',{
             userName:data.userName,
             userMessage:data.userMessage
@@ -36,7 +36,7 @@ io.sockets.on('connection',function (socket) {
         if(!socket.userName) return;
         if(userNames.indexOf(socket.userName)>-1){
             userNames.splice(userNames.indexOf(socket.userName),1)
-            console.log(userNames)
+            // console.log(userNames)
         }
         socket.broadcast.emit('userNames',userNames)
     })
