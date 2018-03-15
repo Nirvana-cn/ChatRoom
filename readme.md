@@ -1,4 +1,4 @@
-基于Express和Socket.io的聊天服务器，客户端使用Vue重写
+基于Express和Socket.io的聊天服务器，客户端使用Vue再现
 ```
 npm install
 ```
