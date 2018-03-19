@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>聊天室</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -12,11 +13,21 @@
         }
 
         #app {
-            margin: 100px 0 0 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        @media only screen and (max-width: 500px) {
+            #app {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: flex-start;
+            }
         }
 
         .main {
-            float: left;
             margin-right: 50px;
             padding: 10px;
             width: 400px;
