@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>聊天室</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -13,32 +14,42 @@
         }
 
         #app {
+            width: 60%;
+            margin: 50px auto;
+        }
+
+        .container {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: flex-start;
         }
+        .main {
+            width: 400px;
+            min-height: 320px;
+            border: 1px solid #000;
+            margin-right:50px;
+        }
         @media only screen and (max-width: 500px) {
             #app {
+                width: 100%;
+                margin: 0 auto;
+            }
+            .container {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
                 align-items: flex-start;
             }
-        }
+            .main{
+                width:99.5%;
+                margin-bottom:20px;
+            }
 
-        .main {
-            margin-right: 50px;
-            padding: 10px;
-            width: 400px;
-            min-height: 350px;
-            border: 1px solid #000;
         }
-
         .message {
             display: flex;
             flex-direction: column;
-            border: 1px solid #000;
             min-height: 350px;
         }
 
@@ -50,7 +61,7 @@
         }
 
         .text {
-            padding-left: 5px;
+            padding-left: 10px;
         }
 
         .info {
@@ -77,29 +88,31 @@
 </head>
 <body>
 <div id="app">
-    <div class="main">
-        <div class="name" v-show="flag">
-            <p>输入你的昵称</p>
-            <input type="text" v-model="name">
-            <button @click="sendName">提交昵称</button>
-        </div>
-        <div class="message" v-show="!flag">
-            <div class="wrapper" ref="scroll">
-                <p class="tip">聊天记录</p>
-                <div class="text" v-for="record in userMessages">
-                    <p class="info">{{record.userName}} : {{record.userMessage}}</p>
+    <div class="container">
+        <div class="main">
+            <div class="name" v-show="flag">
+                <p>输入你的昵称</p>
+                <input type="text" v-model="name">
+                <button @click="sendName">提交昵称</button>
+            </div>
+            <div class="message" v-show="!flag">
+                <div class="wrapper" ref="scroll">
+                    <p class="tip">聊天记录</p>
+                    <div class="text" v-for="record in userMessages">
+                        <p class="info">{{record.userName}} : {{record.userMessage}}</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <input type="text" v-model="message" class="input">
+                    <button @click="sendMessage">发送信息</button>
                 </div>
             </div>
-            <div class="content">
-                <input type="text" v-model="message" class="input">
-                <button @click="sendMessage">发送信息</button>
-            </div>
         </div>
-    </div>
-    <div class="list">
-        <p class="remind">目前有 {{userNames.length}} 位好友在线</p>
-        <div v-for="user in userNames">
-            <p>{{user}}</p>
+        <div class="list">
+            <p class="remind">目前有 {{userNames.length}} 位好友在线</p>
+            <div v-for="user in userNames">
+                <p>{{user}}</p>
+            </div>
         </div>
     </div>
 </div>
