@@ -24,29 +24,34 @@
             justify-content: center;
             align-items: flex-start;
         }
+
         .main {
             width: 400px;
             min-height: 320px;
             border: 1px solid #000;
-            margin-right:50px;
+            margin-right: 50px;
         }
+
         @media only screen and (max-width: 500px) {
             #app {
                 width: 100%;
                 margin: 0 auto;
             }
+
             .container {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
                 align-items: flex-start;
             }
-            .main{
-                width:99.5%;
-                margin-bottom:20px;
+
+            .main {
+                width: 99.5%;
+                margin-bottom: 20px;
             }
 
         }
+
         .message {
             display: flex;
             flex-direction: column;
@@ -84,6 +89,10 @@
         .remind {
             margin-bottom: 10px;
         }
+        .demand{
+            font-size:10px;
+            color:#f00;
+        }
     </style>
 </head>
 <body>
@@ -94,6 +103,7 @@
                 <p>输入你的昵称</p>
                 <input type="text" v-model="name">
                 <button @click="sendName">提交昵称</button>
+                <p class="demand">(昵称不能为空或含有任何空格)</p>
             </div>
             <div class="message" v-show="!flag">
                 <div class="wrapper" ref="scroll">
@@ -138,20 +148,24 @@
         methods: {
             sendName() {
                 let that = this
-                socket.emit('name', {userName: that.name}, function (data) {
-                    if (data) {
+                if (that.name !== '' && that.name.search(' ') == -1) {
+                    socket.emit('name', {userName: that.name}, function (data) {
+                        if (data) {
 //                        console.log('user name set successfully')
-                        that.flag = false
-                    } else {
-                        alert('That user name is already taken')
-                    }
-                })
+                            that.flag = false
+                        } else {
+                            alert('That user name is already taken')
+                        }
+                    })
+                }
             },
             sendMessage() {
                 let that = this;
-                socket.emit('message', {userName: that.name, userMessage: that.message})
-                that.userMessages.push({userName: that.name, userMessage: that.message})
-                that.message = ''
+                if (that.message !== '') {
+                    socket.emit('message', {userName: that.name, userMessage: that.message})
+                    that.userMessages.push({userName: that.name, userMessage: that.message})
+                    that.message = ''
+                }
             }
         }
     })
