@@ -12,7 +12,7 @@ var server=app.listen(3002,function () {
     console.log('Server is listening at http://localhost:3002')
 })
 var io=require('socket.io').listen(server)
-io.sockets.on('connection',function (socket) {
+io.on('connection',function (socket) {
     socket.emit('welcome',userNames)
     socket.on('name',function (data,callback) {
         // console.log(`Server received the following name : ${data.userName}`)
@@ -22,7 +22,7 @@ io.sockets.on('connection',function (socket) {
             callback(true)
             userNames.push(data.userName)
             socket.userName=data.userName
-            io.sockets.emit('userNames',userNames)
+            io.emit('userNames',userNames)
         }
     });
     socket.on('message',function (data) {
@@ -40,4 +40,4 @@ io.sockets.on('connection',function (socket) {
         }
         socket.broadcast.emit('userNames',userNames)
     })
-});
+})

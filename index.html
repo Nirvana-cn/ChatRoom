@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <input type="text" v-model="message" class="input">
+                    <input type="text" v-model="message" class="input" @keyup.enter="sendMessage">
                     <button @click="sendMessage">发送信息</button>
                 </div>
             </div>
