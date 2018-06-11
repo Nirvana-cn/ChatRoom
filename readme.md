@@ -8,6 +8,6 @@ node server.js
 
 浏览器访问127.0.0.1:3002
 
-在线 [demo](http://chat.libaozhi.com)
+在线 [demo](http://chat.orangecat.com)
 
 (出自Node.js入门经典)
